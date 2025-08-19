@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculador Perpétuo de Casas Astrológicas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #34495e;
+            font-size: 1.1em;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #bdc3c7;
+            border-radius: 10px;
+            font-size: 16px;
+            background-color: white;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
+        }
+
+        .calculate-btn:active {
+            transform: translateY(0);
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            border-left: 5px solid #3498db;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .house-number {
+            font-size: 3em;
+            font-weight: bold;
+            color: #3498db;
+            text-align: center;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .interpretation {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border: 1px solid #ecf0f1;
+            font-style: italic;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .zodiac-symbol {
+            display: inline-block;
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .house-number {
+                font-size: 2.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✨ Calculador Perpétuo de Casas Astrológicas ✨</h1>
+        
+        <div class="form-group">
+            <label for="planeta">Planeta/Ponto Natal:</label>
+            <select id="planeta">
+                <option value="">Selecione um planeta/ponto...</option>
+                <option value="sol">☉ Sol</option>
+                <option value="lua">☽ Lua</option>
+                <option value="ascendente">⬆ Ascendente</option>
+                <option value="mercurio">☿ Mercúrio</option>
+                <option value="venus">♀ Vénus</option>
+                <option value="marte">♂ Marte</option>
+                <option value="jupiter">♃ Júpiter</option>
+                <option value="saturno">♄ Saturno</option>
+                <option value="urano">♅ Úrano</option>
+                <option value="neptuno">♆ Neptuno</option>
+                <option value="plutao">♇ Plutão</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="signo-natal">Signo Natal:</label>
+            <select id="signo-natal">
+                <option value="">Selecione o signo natal...</option>
+                <option value="Carneiro">♈ Carneiro</option>
+                <option value="Touro">♉ Touro</option>
+                <option value="Gémeos">♊ Gémeos</option>
+                <option value="Caranguejo">♋ Caranguejo</option>
+                <option value="Leão">♌ Leão</option>
+                <option value="Virgem">♍ Virgem</option>
+                <option value="Balança">♎ Balança</option>
+                <option value="Escorpião">♏ Escorpião</option>
+                <option value="Sagitário">♐ Sagitário</option>
+                <option value="Capricórnio">♑ Capricórnio</option>
+                <option value="Aquário">♒ Aquário</option>
+                <option value="Peixes">♓ Peixes</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="signo-transito">Signo em Trânsito:</label>
+            <select id="signo-transito">
+                <option value="">Selecione o signo em trânsito...</option>
+                <option value="Carneiro">♈ Carneiro</option>
+                <option value="Touro">♉ Touro</option>
+                <option value="Gémeos">♊ Gémeos</option>
+                <option value="Caranguejo">♋ Caranguejo</option>
+                <option value="Leão">♌ Leão</option>
+                <option value="Virgem">♍ Virgem</option>
+                <option value="Balança">♎ Balança</option>
+                <option value="Escorpião">♏ Escorpião</option>
+                <option value="Sagitário">♐ Sagitário</option>
+                <option value="Capricórnio">♑ Capricórnio</option>
+                <option value="Aquário">♒ Aquário</option>
+                <option value="Peixes">♓ Peixes</option>
+            </select>
+        </div>
+
+        <button class="calculate-btn" onclick="calcularCasa()">🔮 Calcular Casa Ativada</button>
+
+        <div id="resultado" class="result">
+            <h3>Casa Ativada:</h3>
+            <div id="casa-numero" class="house-number"></div>
+            <div id="interpretacao" class="interpretation"></div>
+        </div>
+    </div>
+
+    <script>
+        // Base de dados das casas
+        const casasData = {
+            "Carneiro": {
+                "Carneiro": 1, "Touro": 2, "Gémeos": 3, "Caranguejo": 4, "Leão": 5, "Virgem": 6,
+                "Balança": 7, "Escorpião": 8, "Sagitário": 9, "Capricórnio": 10, "Aquário": 11, "Peixes": 12
+            },
+            "Touro": {
+                "Carneiro": 12, "Touro": 1, "Gémeos": 2, "Caranguejo": 3, "Leão": 4, "Virgem": 5,
+                "Balança": 6, "Escorpião": 7, "Sagitário": 8, "Capricórnio": 9, "Aquário": 10, "Peixes": 11
+            },
+            "Gémeos": {
+                "Carneiro": 11, "Touro": 12, "Gémeos": 1, "Caranguejo": 2, "Leão": 3, "Virgem": 4,
+                "Balança": 5, "Escorpião": 6, "Sagitário": 7, "Capricórnio": 8, "Aquário": 9, "Peixes": 10
+            },
+            "Caranguejo": {
+                "Carneiro": 10, "Touro": 11, "Gémeos": 12, "Caranguejo": 1, "Leão": 2, "Virgem": 3,
+                "Balança": 4, "Escorpião": 5, "Sagitário": 6, "Capricórnio": 7, "Aquário": 8, "Peixes": 9
+            },
+            "Leão": {
+                "Carneiro": 9, "Touro": 10, "Gémeos": 11, "Caranguejo": 12, "Leão": 1, "Virgem": 2,
+                "Balança": 3, "Escorpião": 4, "Sagitário": 5, "Capricórnio": 6, "Aquário": 7, "Peixes": 8
+            },
+            "Virgem": {
+                "Carneiro": 8, "Touro": 9, "Gémeos": 10, "Caranguejo": 11, "Leão": 12, "Virgem": 1,
+                "Balança": 2, "Escorpião": 3, "Sagitário": 4, "Capricórnio": 5, "Aquário": 6, "Peixes": 7
+            },
+            "Balança": {
+                "Carneiro": 7, "Touro": 8, "Gémeos": 9, "Caranguejo": 10, "Leão": 11, "Virgem": 12,
+                "Balança": 1, "Escorpião": 2, "Sagitário": 3, "Capricórnio": 4, "Aquário": 5, "Peixes": 6
+            },
+            "Escorpião": {
+                "Carneiro": 6, "Touro": 7, "Gémeos": 8, "Caranguejo": 9, "Leão": 10, "Virgem": 11,
+                "Balança": 12, "Escorpião": 1, "Sagitário": 2, "Capricórnio": 3, "Aquário": 4, "Peixes": 5
+            },
+            "Sagitário": {
+                "Carneiro": 5, "Touro": 6, "Gémeos": 7, "Caranguejo": 8, "Leão": 9, "Virgem": 10,
+                "Balança": 11, "Escorpião": 12, "Sagitário": 1, "Capricórnio": 2, "Aquário": 3, "Peixes": 4
+            },
+            "Capricórnio": {
+                "Carneiro": 4, "Touro": 5, "Gémeos": 6, "Caranguejo": 7, "Leão": 8, "Virgem": 9,
+                "Balança": 10, "Escorpião": 11, "Sagitário": 12, "Capricórnio": 1, "Aquário": 2, "Peixes": 3
+            },
+            "Aquário": {
+                "Carneiro": 3, "Touro": 4, "Gémeos": 5, "Caranguejo": 6, "Leão": 7, "Virgem": 8,
+                "Balança": 9, "Escorpião": 10, "Sagitário": 11, "Capricórnio": 12, "Aquário": 1, "Peixes": 2
+            },
+            "Peixes": {
+                "Carneiro": 2, "Touro": 3, "Gémeos": 4, "Caranguejo": 5, "Leão": 6, "Virgem": 7,
+                "Balança": 8, "Escorpião": 9, "Sagitário": 10, "Capricórnio": 11, "Aquário": 12, "Peixes": 1
+            }
+        };
+
+        // Interpretações das casas
+        const interpretacoesCasas = {
+            1: "🌟 Casa da Identidade - Foco na personalidade, aparência física e como se apresenta ao mundo. É o momento de afirmar quem você é.",
+            2: "💰 Casa dos Recursos - Atenção às finanças pessoais, valores próprios e recursos materiais. Período para consolidar a segurança material.",
+            3: "🗣️ Casa da Comunicação - Destaque para a comunicação, aprendizagem, irmãos e ambiente próximo. Tempo de trocar ideias e conhecimento.",
+            4: "🏠 Casa das Raízes - Concentração na família, lar, tradições e bases emocionais. Momento de cuidar das fundações da vida.",
+            5: "🎭 Casa da Criatividade - Foco na criatividade, romances, filhos e autoexpressão. Período para brilhar e expressar a sua autenticidade.",
+            6: "⚕️ Casa do Serviço - Atenção à saúde, rotina diária, trabalho e serviço aos outros. Tempo de organizar a vida prática.",
+            7: "💕 Casa dos Relacionamentos - Destaque para parcerias, casamento e relacionamentos próximos. Momento de equilibrar o 'eu' e o 'nós'.",
+            8: "🔮 Casa da Transformação - Concentração em recursos compartilhados, transformações profundas e renascimento. Período de mudanças intensas.",
+            9: "🌍 Casa da Expansão - Foco na filosofia, estudos superiores, viagens e expansão da consciência. Tempo de alargar horizontes.",
+            10: "🏆 Casa da Carreira - Atenção à carreira, reputação pública e objetivos de longo prazo. Momento de construir o seu legado.",
+            11: "👥 Casa dos Amigos - Destaque para amizades, grupos, esperanças e sonhos futuros. Período para conectar-se com a comunidade.",
+            12: "🧘 Casa da Espiritualidade - Concentração na espiritualidade, subconsciente e libertação de padrões antigos. Tempo de introspeção e cura."
+        };
+
+        function calcularCasa() {
+            const signoNatal = document.getElementById('signo-natal').value;
+            const signoTransito = document.getElementById('signo-transito').value;
+            const resultado = document.getElementById('resultado');
+            const casaNumero = document.getElementById('casa-numero');
+            const interpretacao = document.getElementById('interpretacao');
+
+            if (!signoNatal || !signoTransito) {
+                alert('Por favor, selecione ambos os signos!');
+                return;
+            }
+
+            // Calcular a casa
+            const casa = casasData[signoNatal][signoTransito];
+            
+            // Mostrar resultado
+            casaNumero.textContent = `Casa ${casa}`;
+            interpretacao.textContent = interpretacoesCasas[casa];
+            resultado.style.display = 'block';
+
+            // Scroll suave para o resultado
+            resultado.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Permitir cálculo com Enter
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                calcularCasa();
+            }
+        });
+    </script>
+</body>
+</html>
